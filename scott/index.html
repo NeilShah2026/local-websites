@@ -13,8 +13,10 @@
 <meta property="og:description" content="Family-owned landscaping in Canton, MA. Owner Scott on site for every job. 4.7★ from 17 Google reviews.">
 <meta property="og:image" content="images/hero-garden.jpg">
 
-<!-- Hero is the largest paint on the page; start it early. -->
-<link rel="preload" as="image" href="images/hero-garden.jpg" fetchpriority="high">
+<!-- Hero is the largest paint on the page; start it early.
+     Phones preload the 147KB variant, desktops the 305KB one. -->
+<link rel="preload" as="image" href="images/hero-garden-sm.jpg" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero-garden.jpg" media="(min-width: 761px)" fetchpriority="high">
 
 <script type="application/ld+json">
 {
@@ -73,9 +75,19 @@
   --gut: 20px;
 }
 
+/* Tighter gutters on the narrowest phones (320–360px). */
+@media (max-width:380px){ :root{ --gut: 15px; } }
+
 *,*::before,*::after{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;   /* stop iOS inflating text in landscape */
+  /* Anchor targets must clear the sticky header. On phones that's two rows
+     (logo + nav strip ≈ 104px); on desktop it collapses to one. */
+  scroll-padding-top:112px;
+}
+@media (min-width:900px){ html{ scroll-padding-top:86px; } }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
 
 body{
@@ -86,7 +98,15 @@ body{
   font-size:17px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;               /* belt-and-braces against sideways scroll */
 }
+
+/* Long unbroken strings (phone numbers, addresses, URLs) must never
+   push the layout wider than the screen. */
+h1,h2,h3,p,li,dd,blockquote,a{ overflow-wrap:break-word; }
+
+/* Every tappable thing clears the 44px minimum. */
+a, button, input, select, textarea{ -webkit-tap-highlight-color:rgba(180,84,31,.18); }
 
 h1,h2,h3,h4{
   font-family:var(--serif);
@@ -147,8 +167,10 @@ img{ max-width:100%; display:block; }
 .btn--solid{ background:var(--forest); color:var(--paper); border-color:var(--forest); }
 .btn--solid:hover{ background:var(--forest-deep); border-color:var(--forest-deep); }
 
-/* roomier sections — less copy, more air */
-.section{ padding:92px 0; }
+/* Mobile-first spacing: tight on phones, opening up as the screen grows. */
+.section{ padding:56px 0; }
+@media (min-width:640px){ .section{ padding:72px 0; } }
+@media (min-width:900px){ .section{ padding:92px 0; } }
 
 /* ============ HEADER ============ */
 
@@ -161,9 +183,13 @@ img{ max-width:100%; display:block; }
 }
 .topbar .wrap{
   display:flex; align-items:center; justify-content:center;
-  min-height:36px; text-align:center;
+  min-height:34px; text-align:center;
+  padding-top:6px; padding-bottom:6px;
 }
 .topbar strong{ color:var(--stone-light); font-weight:700; }
+/* Trim the top bar to essentials on small screens so it stays one line. */
+.topbar .hide-sm{ display:none; }
+@media (min-width:600px){ .topbar .hide-sm{ display:inline; } }
 
 .header{
   position:sticky; top:0; z-index:100;
@@ -173,38 +199,88 @@ img{ max-width:100%; display:block; }
 }
 .header__inner{
   display:flex; align-items:center; justify-content:space-between;
-  gap:18px; min-height:74px; padding:10px var(--gut);
+  flex-wrap:wrap;              /* lets the nav drop to its own row on phones */
+  gap:12px; min-height:60px; padding:9px var(--gut);
   max-width:var(--wrap); margin:0 auto; width:100%;
 }
 
-.brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; flex-shrink:0; }
-.brand__mark{ width:42px; height:42px; flex-shrink:0; }
-.brand__text{ display:flex; flex-direction:column; line-height:1.05; }
-.brand__name{ font-family:var(--serif); font-size:20px; font-weight:700; }
+.brand{
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:inherit;
+  min-width:0;                 /* lets the name shrink instead of overflowing */
+}
+.brand__mark{ width:36px; height:36px; flex-shrink:0; }
+.brand__text{ display:flex; flex-direction:column; line-height:1.05; min-width:0; }
+.brand__name{ font-family:var(--serif); font-size:17px; font-weight:700; }
 .brand__sub{
-  font-size:10.5px; font-weight:600; letter-spacing:.17em;
+  font-size:9.5px; font-weight:600; letter-spacing:.14em;
   text-transform:uppercase; color:var(--stone); margin-top:3px;
+  white-space:nowrap;
 }
 
-.nav{ display:none; }
-.nav a{
-  text-decoration:none; font-size:14.5px; font-weight:600;
-  letter-spacing:.05em; text-transform:uppercase;
-  color:var(--stone-light); padding:8px 0; border-bottom:2px solid transparent;
+/* --- Nav: a scrollable strip under the logo on phones, inline on desktop --- */
+.nav{
+  display:flex;
+  gap:22px;
+  order:3;                       /* below the logo + phone row */
+  flex-basis:100%;
+  /* Bleed to the full header width, cancelling .header__inner padding. */
+  margin:9px calc(var(--gut) * -1) -9px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  background:var(--forest-deep);
+  border-top:1px solid rgba(201,188,163,.16);
+  padding:0 var(--gut);
+  scroll-snap-type:x proximity;
 }
-.nav a:hover{ color:#fff; border-bottom-color:var(--rust); }
+.nav::-webkit-scrollbar{ display:none; }
+.nav a{
+  text-decoration:none; font-size:13px; font-weight:700;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:var(--stone-light);
+  padding:12px 0;                /* 44px tall tap target */
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  scroll-snap-align:start;
+}
+.nav a:hover, .nav a:focus-visible{ color:#fff; border-bottom-color:var(--rust); }
 
 .header__phone{
-  display:flex; align-items:center; gap:9px; text-decoration:none;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  text-decoration:none;
   background:var(--rust); color:#fff; font-weight:700; font-size:16px;
-  padding:11px 16px; border-radius:2px; white-space:nowrap;
+  padding:11px 14px; border-radius:2px; white-space:nowrap;
+  flex-shrink:0;
+  min-height:44px;               /* full-size tap target on phones */
 }
 .header__phone:hover{ background:var(--rust-dark); }
 .header__phone .lbl{ display:none; }
 
-@media (min-width:900px){
-  .nav{ display:flex; gap:30px; margin-left:auto; margin-right:32px; }
+/* Show the digits as soon as there's room for them. */
+@media (min-width:420px){
   .header__phone .lbl{ display:inline; }
+  .brand__name{ font-size:18px; }
+}
+@media (min-width:640px){
+  .header__inner{ min-height:68px; }
+  .brand__mark{ width:40px; height:40px; }
+  .brand__name{ font-size:20px; }
+  .nav{ gap:30px; }
+  .nav a{ font-size:13.5px; }
+}
+@media (min-width:900px){
+  .header__inner{ min-height:74px; padding:10px var(--gut); }
+  .brand__mark{ width:42px; height:42px; }
+  /* Nav folds back into the header row on desktop. */
+  .header__inner{ flex-wrap:nowrap; }
+  .nav{
+    order:0; flex-basis:auto;
+    background:transparent; border-top:0; padding:0;
+    overflow:visible;
+    margin:0 30px 0 auto;
+  }
+  .nav a{ font-size:14.5px; padding:8px 0; }
 }
 
 /* ============ HERO ============ */
@@ -233,17 +309,25 @@ img{ max-width:100%; display:block; }
     linear-gradient(to bottom, rgba(15,28,19,.30), rgba(15,28,19,.42));
 }
 @media (max-width:760px){
-  /* No room to dodge the type on narrow screens — even it out. */
-  .hero__media{ background-position:70% 50%; }
+  /* No room to dodge the type on narrow screens — even it out,
+     and load the 147KB image instead of the 305KB one. */
+  .hero__media{
+    background-image:var(--hero-photo-sm, none);
+    background-position:70% 50%;
+  }
   .hero__media::after{
     background:linear-gradient(to bottom, rgba(15,28,19,.86), rgba(15,28,19,.92));
   }
 }
-.hero__inner{ position:relative; padding:96px 0 84px; }
+.hero__inner{ position:relative; padding:52px 0 48px; }
+@media (min-width:640px){ .hero__inner{ padding:76px 0 68px; } }
+@media (min-width:900px){ .hero__inner{ padding:96px 0 84px; } }
+
 .hero h1{
-  font-size:clamp(36px, 8.4vw, 66px);
+  /* Starts at 30px so it can't blow out a 320px screen. */
+  font-size:clamp(30px, 7.6vw, 66px);
   max-width:15ch;
-  margin-bottom:26px;
+  margin-bottom:22px;
   text-wrap:balance;
 }
 .hero h1 em{ font-style:normal; color:var(--stone); display:block; }
@@ -253,31 +337,50 @@ img{ max-width:100%; display:block; }
   max-width:40ch;
   margin-bottom:32px;
 }
-.hero__actions{ display:flex; flex-wrap:wrap; gap:13px; margin-bottom:36px; }
-.hero__actions .btn{ flex:1 1 260px; }
+/* Buttons stack full-width on phones, sit side by side once there's room. */
+.hero__actions{ display:flex; flex-direction:column; gap:11px; margin-bottom:34px; }
+.hero__actions .btn{ width:100%; }
+@media (min-width:560px){
+  .hero__actions{ flex-direction:row; flex-wrap:wrap; gap:13px; }
+  .hero__actions .btn{ width:auto; flex:1 1 240px; }
+}
 
+/* Grid, not flex — wrapped flex items left orphaned divider borders. */
 .hero__facts{
-  display:flex; flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:20px 0;
   border-top:1px solid rgba(201,188,163,.3);
-  padding-top:26px;
+  padding-top:24px;
   max-width:720px;
 }
-.fact{ flex:1 1 130px; padding-right:22px; }
-.fact + .fact{ border-left:1px solid rgba(201,188,163,.3); padding-left:22px; }
-.fact__num{ font-family:var(--serif); font-size:30px; font-weight:700; color:#fff; line-height:1; }
+.fact{ padding-right:18px; }
+/* Divider only between columns, never dangling at the start of a row. */
+.fact:nth-child(2n){ border-left:1px solid rgba(201,188,163,.3); padding-left:18px; }
+.fact__num{ font-family:var(--serif); font-size:26px; font-weight:700; color:#fff; line-height:1; }
 .fact__lbl{
-  font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--stone); margin-top:8px; font-weight:600;
+  font-size:11.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--stone); margin-top:7px; font-weight:600;
+}
+@media (min-width:760px){
+  .hero__facts{ grid-template-columns:repeat(4, 1fr); gap:0; }
+  .fact{ padding-right:22px; }
+  .fact:nth-child(2n){ border-left:0; padding-left:0; }
+  .fact + .fact{ border-left:1px solid rgba(201,188,163,.3); padding-left:22px; }
+  .fact__num{ font-size:30px; }
+  .fact__lbl{ font-size:12.5px; }
 }
 
 /* ============ GOOGLE RATING ============ */
 
 .rating{
-  display:inline-flex; align-items:center; gap:11px;
+  display:flex; align-items:center; flex-wrap:wrap;
+  gap:8px 10px;
   background:rgba(246,243,236,.07);
   border:1px solid rgba(201,188,163,.34);
-  padding:9px 15px; border-radius:2px;
-  margin-bottom:28px;
+  padding:9px 13px; border-radius:2px;
+  margin-bottom:26px;
+  max-width:max-content;         /* hugs content but can't exceed the screen */
 }
 .rating__g{ width:17px; height:17px; flex-shrink:0; }
 .rating__score{ font-family:var(--serif); font-size:19px; font-weight:700; color:#fff; line-height:1; }
@@ -286,9 +389,14 @@ img{ max-width:100%; display:block; }
   font-size:13.5px; color:var(--stone);
   border-left:1px solid rgba(201,188,163,.34); padding-left:11px;
 }
+/* Once it wraps to a second line the divider reads as a stray mark. */
+@media (max-width:400px){
+  .rating__count{ border-left:0; padding-left:0; }
+}
 
 .rating--panel{
   display:flex; flex-wrap:wrap; align-items:center; gap:14px;
+  max-width:none;                /* undo the badge's max-content clamp */
   background:transparent; border:0;
   border-top:1px solid rgba(201,188,163,.28);
   border-bottom:1px solid rgba(201,188,163,.28);
@@ -312,8 +420,9 @@ img{ max-width:100%; display:block; }
 
 /* ============ SECTION HEADS ============ */
 
-.sechead{ margin-bottom:46px; }
-.sechead h2{ font-size:clamp(30px, 5.2vw, 44px); margin-bottom:0; max-width:20ch; }
+.sechead{ margin-bottom:32px; }
+@media (min-width:900px){ .sechead{ margin-bottom:46px; } }
+.sechead h2{ font-size:clamp(27px, 5.6vw, 44px); margin-bottom:0; max-width:20ch; }
 .sechead--light h2{ color:#fff; }
 
 /* ============ SERVICES ============ */
@@ -322,15 +431,19 @@ img{ max-width:100%; display:block; }
 .service{
   border-bottom:1px solid var(--rule);
   border-right:1px solid var(--rule);
-  padding:30px 24px;
+  padding:20px var(--gut);
+  min-height:64px;
   background:#fff;
-  display:flex; gap:16px; align-items:center;
+  display:flex; gap:14px; align-items:center;
 }
+@media (min-width:640px){ .service{ padding:30px 24px; gap:16px; } }
 .service:hover{ background:#fffdf8; }
 .service__icon{ flex-shrink:0; width:32px; height:32px; color:var(--moss); }
-.service h3{ font-size:20px; margin:0; color:var(--forest); }
+.service h3{ font-size:18px; margin:0; color:var(--forest); }
+@media (min-width:640px){ .service h3{ font-size:20px; } }
 
-.service--cta{ background:var(--forest); display:block; padding:30px 24px; }
+.service--cta{ background:var(--forest); display:block; padding:24px var(--gut); }
+@media (min-width:640px){ .service--cta{ padding:30px 24px; } }
 .service--cta h3{ color:#fff; margin-bottom:10px; }
 .service--cta a{
   color:#fff; font-weight:700; font-size:16px; text-decoration:none;
@@ -368,6 +481,9 @@ img{ max-width:100%; display:block; }
   aspect-ratio:1/1;          /* the sign photo is square */
   border:1px solid rgba(20,37,25,.25);
 }
+@media (max-width:760px){
+  .about__photo{ background-image:var(--about-photo-sm, none); }
+}
 .about__fig figcaption{
   font-size:13.5px;
   color:var(--ink-soft);
@@ -389,12 +505,14 @@ img{ max-width:100%; display:block; }
 
 #reviews{ background:var(--forest); color:var(--stone-light); }
 .quotes{ display:grid; gap:1px; background:rgba(201,188,163,.28); border:1px solid rgba(201,188,163,.28); }
-.quote{ background:var(--forest); padding:32px 26px; }
-.quote__stars{ color:var(--rust); letter-spacing:3px; font-size:15px; margin-bottom:16px; }
+.quote{ background:var(--forest); padding:24px var(--gut); }
+@media (min-width:640px){ .quote{ padding:32px 26px; } }
+.quote__stars{ color:var(--rust); letter-spacing:3px; font-size:15px; margin-bottom:14px; }
 .quote blockquote{
-  margin:0 0 18px; font-family:var(--serif);
-  font-size:20px; line-height:1.42; color:#fff;
+  margin:0 0 16px; font-family:var(--serif);
+  font-size:18.5px; line-height:1.42; color:#fff;
 }
+@media (min-width:640px){ .quote blockquote{ font-size:20px; margin-bottom:18px; } }
 .quote figcaption{
   font-size:12.5px; font-weight:700; letter-spacing:.13em;
   text-transform:uppercase; color:var(--stone);
@@ -468,13 +586,14 @@ img{ max-width:100%; display:block; }
 
 .footer{ background:#0F1C13; color:var(--stone); font-size:15px; padding:34px 0 42px; }
 .footer__top{
-  display:flex; flex-wrap:wrap; gap:18px 34px;
-  align-items:center; justify-content:space-between;
+  display:flex; flex-wrap:wrap; gap:16px 34px;
+  align-items:flex-start; justify-content:space-between;
   padding-bottom:22px; border-bottom:1px solid rgba(201,188,163,.2);
 }
+@media (min-width:760px){ .footer__top{ align-items:center; } }
 .footer__brand{ font-family:var(--serif); font-size:19px; color:var(--stone-light); }
-.footer__links{ display:flex; flex-wrap:wrap; gap:20px; list-style:none; margin:0; padding:0; }
-.footer__links a{ color:var(--stone); text-decoration:none; }
+.footer__links{ display:flex; flex-wrap:wrap; gap:6px 20px; list-style:none; margin:0; padding:0; }
+.footer__links a{ color:var(--stone); text-decoration:none; display:inline-block; padding:6px 0; }
 .footer__links a:hover{ color:#fff; text-decoration:underline; }
 .footer__bottom{
   padding-top:20px; display:flex; flex-wrap:wrap; gap:8px 24px;
@@ -486,14 +605,29 @@ img{ max-width:100%; display:block; }
 
 .callbar{
   position:fixed; left:0; right:0; bottom:0; z-index:110;
-  display:flex; background:var(--rust); border-top:1px solid rgba(0,0,0,.2);
+  display:flex; background:var(--rust);
+  border-top:1px solid rgba(0,0,0,.2);
+  /* Clear the iPhone home indicator. */
+  padding-bottom:env(safe-area-inset-bottom, 0px);
 }
 .callbar a{
-  flex:1; text-align:center; padding:15px 8px;
+  flex:1; text-align:center;
+  padding:15px 8px;
+  min-height:52px;
+  display:flex; align-items:center; justify-content:center;
   color:#fff; text-decoration:none; font-weight:700; font-size:16px;
+  line-height:1.2;
 }
 .callbar a + a{ background:var(--forest); border-left:1px solid rgba(0,0,0,.2); }
-body{ padding-bottom:56px; }
+
+/* Reserve room so the bar never covers the last of the content. */
+body{ padding-bottom:calc(53px + env(safe-area-inset-bottom, 0px)); }
+
+/* Landscape phones are short — the bar costs too much height, so drop it. */
+@media (max-height:450px) and (orientation:landscape){
+  .callbar{ display:none; }
+  body{ padding-bottom:0; }
+}
 
 @media (min-width:900px){
   .callbar{ display:none; }
@@ -507,7 +641,7 @@ body{ padding-bottom:56px; }
 
 <div class="topbar">
   <div class="wrap">
-    <span>Canton, MA since <strong>1986</strong> &nbsp;·&nbsp; <strong>4.7★</strong> · 17 Google reviews &nbsp;·&nbsp; Fully insured</span>
+    <span>Canton, MA since <strong>1986</strong> &nbsp;·&nbsp; <strong>4.7★</strong><span class="hide-sm"> · 17 Google reviews</span><span class="hide-sm"> &nbsp;·&nbsp; Fully insured</span></span>
   </div>
 </div>
 
@@ -550,7 +684,9 @@ body{ padding-bottom:56px; }
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="hero__media" style="--hero-photo:url('images/hero-garden.jpg')" aria-hidden="true"></div>
+  <div class="hero__media"
+       style="--hero-photo:url('images/hero-garden.jpg'); --hero-photo-sm:url('images/hero-garden-sm.jpg')"
+       aria-hidden="true"></div>
   <div class="wrap hero__inner">
     <p class="eyebrow eyebrow--light">Canton, Massachusetts</p>
     <h1>Serving Canton and the Greater Boston Area <em>Since 1986.</em></h1>
@@ -705,7 +841,7 @@ body{ padding-bottom:56px; }
       <aside class="about__aside">
         <figure class="about__fig">
           <div class="about__photo"
-               style="--about-photo:url('images/yard-sign.jpg')"
+               style="--about-photo:url('images/yard-sign.jpg'); --about-photo-sm:url('images/yard-sign-sm.jpg')"
                role="img"
                aria-label="SB Landscape Service yard sign on a finished lawn, beside a stone wall planted with creeping phlox"></div>
           <figcaption>Finished spring work — phlox, fresh mulch, and our sign on the lawn.</figcaption>
