@@ -120,6 +120,9 @@ p{ margin:0 0 1em; }
 a{ color:inherit; }
 img{ max-width:100%; display:block; }
 
+/* Gutter container. NOTE: if another class lands on the same element as
+   .wrap, set vertical space with padding-block — a `padding: x 0 y`
+   shorthand will silently wipe these side gutters out. */
 .wrap{
   width:100%;
   max-width:var(--wrap);
@@ -177,19 +180,26 @@ img{ max-width:100%; display:block; }
 .topbar{
   background:var(--forest-deep);
   color:var(--stone);
-  font-size:13.5px;
-  letter-spacing:.03em;
+  font-size:12.5px;
+  letter-spacing:.04em;
   border-bottom:1px solid rgba(201,188,163,.16);
 }
 .topbar .wrap{
-  display:flex; align-items:center; justify-content:center;
-  min-height:34px; text-align:center;
-  padding-top:6px; padding-bottom:6px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  min-height:32px; text-align:center;
+  padding-top:7px; padding-bottom:7px;
 }
 .topbar strong{ color:var(--stone-light); font-weight:700; }
-/* Trim the top bar to essentials on small screens so it stays one line. */
-.topbar .hide-sm{ display:none; }
-@media (min-width:600px){ .topbar .hide-sm{ display:inline; } }
+.topbar .star{ color:#E8A33D; }
+.topbar .dot{ color:rgba(201,188,163,.45); }
+
+/* Phones get the trust signals only — the logo lockup immediately below
+   already carries "Canton, MA · Est. 1986", so repeating it wastes the line. */
+.topbar .on-lg{ display:none; }
+@media (min-width:720px){
+  .topbar{ font-size:13.5px; }
+  .topbar .on-lg{ display:inline; }
+}
 
 .header{
   position:sticky; top:0; z-index:100;
@@ -223,8 +233,9 @@ img{ max-width:100%; display:block; }
   display:flex;
   gap:22px;
   order:3;                       /* below the logo + phone row */
-  flex-basis:100%;
-  /* Bleed to the full header width, cancelling .header__inner padding. */
+  /* Full bleed: 100% of the content box PLUS both gutters it sits inside,
+     then pulled outward by one gutter on each side. */
+  flex-basis:calc(100% + (var(--gut) * 2));
   margin:9px calc(var(--gut) * -1) -9px;
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
@@ -315,20 +326,32 @@ img{ max-width:100%; display:block; }
     background-image:var(--hero-photo-sm, none);
     background-position:70% 50%;
   }
+  /* Light enough to read the planting, dark enough to hold off-white type.
+     Deepens toward the bottom where the buttons and fact row sit. */
   .hero__media::after{
-    background:linear-gradient(to bottom, rgba(15,28,19,.86), rgba(15,28,19,.92));
+    background:linear-gradient(to bottom,
+      rgba(15,28,19,.58) 0%,
+      rgba(15,28,19,.70) 45%,
+      rgba(15,28,19,.86) 100%);
   }
 }
-.hero__inner{ position:relative; padding:52px 0 48px; }
-@media (min-width:640px){ .hero__inner{ padding:76px 0 68px; } }
-@media (min-width:900px){ .hero__inner{ padding:96px 0 84px; } }
+/* padding-block ONLY — this element also carries .wrap, and a padding
+   shorthand here would wipe out its side gutters. */
+.hero__inner{ position:relative; padding-block:52px 48px; }
+@media (min-width:640px){ .hero__inner{ padding-block:76px 68px; } }
+@media (min-width:900px){ .hero__inner{ padding-block:96px 84px; } }
 
 .hero h1{
-  /* Starts at 30px so it can't blow out a 320px screen. */
-  font-size:clamp(30px, 7.6vw, 66px);
+  /* Starts at 29px so it can't blow out a 320px screen. */
+  font-size:clamp(29px, 7.4vw, 66px);
   max-width:15ch;
-  margin-bottom:22px;
+  margin-bottom:20px;
   text-wrap:balance;
+}
+/* Type sits directly on photography — a soft shadow keeps it readable
+   over the bright spots without needing a heavier scrim. */
+.hero h1, .hero__lede, .hero .eyebrow{
+  text-shadow:0 1px 14px rgba(15,28,19,.55);
 }
 .hero h1 em{ font-style:normal; color:var(--stone); display:block; }
 .hero__lede{
@@ -641,7 +664,11 @@ body{ padding-bottom:calc(53px + env(safe-area-inset-bottom, 0px)); }
 
 <div class="topbar">
   <div class="wrap">
-    <span>Canton, MA since <strong>1986</strong> &nbsp;·&nbsp; <strong>4.7★</strong><span class="hide-sm"> · 17 Google reviews</span><span class="hide-sm"> &nbsp;·&nbsp; Fully insured</span></span>
+    <span>
+      <span class="on-lg">Family owned in Canton, MA since <strong>1986</strong> <span class="dot">·</span> </span>
+      <span class="star">★</span> <strong>4.7</strong> from 17 Google reviews
+      <span class="dot">·</span> Fully insured
+    </span>
   </div>
 </div>
 
