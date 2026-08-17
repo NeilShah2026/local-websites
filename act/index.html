@@ -1,0 +1,1134 @@
+<title>ACT Contractors</title>
+<meta name="description" content="Acoustical ceiling contractor in Taunton, Massachusetts. Grid, tile, clouds and specialty ceilings for commercial and institutional buildings.">
+
+<style>
+  /* ============================================================
+     TOKENS — light is the base; dark redefines tokens only.
+     ============================================================ */
+  :root {
+    --navy-900: #0F1C42;
+    --navy:     #1E3080;
+    --navy-600: #2A429E;
+    --red:      #C4202E;
+    --red-700:  #9E1723;
+
+    --ink:      #131A2E;
+    --muted:    #59637F;
+    --line:     #D2D8E6;
+
+    --ground:   #EBEEF5;
+    --surface:  #FFFFFF;
+    --tile:     #F5F7FB;
+    --tile-alt: #FDFDFE;
+
+    --metal:    #C0C7D6;   /* tee bar */
+    --metal-hi: #E3E7F0;   /* tee bar highlight */
+    --perf:     #C6CCDC;   /* perforation dots */
+
+    --shadow:   0 1px 2px rgba(15,28,66,.06), 0 8px 24px -12px rgba(15,28,66,.22);
+    --shadow-lg:0 2px 4px rgba(15,28,66,.08), 0 28px 60px -24px rgba(15,28,66,.35);
+
+    --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    --tee: 4px;            /* tee-bar width */
+    --maxw: 1180px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy-900: #C9D4FF;
+      --navy:     #7D93F0;
+      --navy-600: #93A6F5;
+      --red:      #F4606C;
+      --red-700:  #F4606C;
+
+      --ink:      #E8EBF6;
+      --muted:    #98A2C2;
+      --line:     #29335F;
+
+      --ground:   #090E20;
+      --surface:  #121A36;
+      --tile:     #151D3D;
+      --tile-alt: #1A2349;
+
+      --metal:    #2E3A6B;
+      --metal-hi: #43518C;
+      --perf:     #2B3563;
+
+      --shadow:   0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+      --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 28px 60px -24px rgba(0,0,0,.85);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --navy-900: #C9D4FF;
+    --navy:     #7D93F0;
+    --navy-600: #93A6F5;
+    --red:      #F4606C;
+    --red-700:  #F4606C;
+
+    --ink:      #E8EBF6;
+    --muted:    #98A2C2;
+    --line:     #29335F;
+
+    --ground:   #090E20;
+    --surface:  #121A36;
+    --tile:     #151D3D;
+    --tile-alt: #1A2349;
+
+    --metal:    #2E3A6B;
+    --metal-hi: #43518C;
+    --perf:     #2B3563;
+
+    --shadow:   0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+    --shadow-lg:0 2px 4px rgba(0,0,0,.5), 0 28px 60px -24px rgba(0,0,0,.85);
+  }
+
+  /* ============================================================
+     BASE
+     ============================================================ */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.02;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 3px solid var(--red);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  /* Perforated acoustical tile face */
+  .perf {
+    background-image: radial-gradient(circle, var(--perf) 0.85px, transparent 1.1px);
+    background-size: 8px 8px;
+    background-position: 4px 4px;
+  }
+
+  /* Small mono label — the submittal-sheet voice */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+  .label b { color: var(--red); font-weight: 700; }
+
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .head-in {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    height: 68px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .brand svg { width: 34px; height: 34px; flex: none; }
+  .brand-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  .nav { display: flex; gap: 26px; }
+  .nav a {
+    font-size: 14px;
+    font-weight: 550;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: color .18s, border-color .18s;
+  }
+  .nav a:hover { color: var(--ink); border-bottom-color: var(--red); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    padding: 13px 22px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: transform .16s, box-shadow .16s, background .16s;
+  }
+  .btn-red {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 0 1px 0 var(--red-700), 0 10px 22px -12px var(--red);
+  }
+  .btn-red:hover { transform: translateY(-1px); box-shadow: 0 2px 0 var(--red-700), 0 16px 28px -14px var(--red); }
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-sm { padding: 10px 16px; font-size: 14px; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 76px 0 84px;
+  }
+  /* faint ceiling plane behind everything */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -10% -5% auto -5%;
+    height: 130%;
+    background-image:
+      linear-gradient(var(--metal) 1px, transparent 1px),
+      linear-gradient(90deg, var(--metal) 1px, transparent 1px);
+    background-size: 96px 96px;
+    opacity: .3;
+    mask-image: radial-gradient(120% 90% at 70% 10%, #000 15%, transparent 72%);
+    -webkit-mask-image: radial-gradient(120% 90% at 70% 10%, #000 15%, transparent 72%);
+    pointer-events: none;
+  }
+  .hero-in {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
+    gap: 56px;
+    align-items: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px 7px 10px;
+    margin-bottom: 26px;
+  }
+  .pin { width: 13px; height: 13px; flex: none; color: var(--red); }
+
+  h1 {
+    font-size: clamp(44px, 6.4vw, 78px);
+    text-transform: uppercase;
+  }
+  h1 .thin {
+    display: block;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+  h1 .rule {
+    display: inline-block;
+    width: 0.62em;
+    height: 0.1em;
+    background: var(--red);
+    vertical-align: 0.24em;
+    margin-right: 0.14em;
+  }
+
+  .lede {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 46ch;
+    margin-top: 24px;
+  }
+  .lede strong { color: var(--ink); font-weight: 650; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  .hero-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .fact { display: flex; align-items: baseline; gap: 9px; }
+  .fact-k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .fact-v { font-size: 15px; font-weight: 600; }
+
+  /* --- the ceiling: hero graphic --- */
+  .ceiling {
+    position: relative;
+    aspect-ratio: 1 / 1.02;
+    background: var(--metal);
+    border: var(--tee) solid var(--metal);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: var(--tee);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  /* metal sheen across the runners */
+  .ceiling::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(148deg, rgba(255,255,255,.5), transparent 42%, rgba(0,0,0,.1));
+    pointer-events: none;
+  }
+  .ct {
+    background: var(--tile);
+    position: relative;
+    animation: set-tile .55s cubic-bezier(.2,.7,.3,1) backwards;
+  }
+  .ct.alt { background: var(--tile-alt); }
+
+  /* a 2x4 lay-in spanning two cells */
+  .ct.wide { grid-column: span 2; }
+
+  /* recessed troffer light fixture */
+  .ct.light {
+    background:
+      linear-gradient(180deg, #FFFDF2, #FFF6D8 55%, #FFEFC0);
+    box-shadow: 0 0 34px 4px rgba(255,224,138,.5);
+  }
+  :root[data-theme="dark"] .ct.light,
+  :root:not([data-theme="light"]) .ct.light { box-shadow: 0 0 50px 8px rgba(255,214,110,.34); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .ct.light { box-shadow: 0 0 34px 4px rgba(255,224,138,.5); } }
+  .ct.light::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(180,140,40,.28);
+  }
+
+  /* diffuser slats on the fixture */
+  .ct.light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(190,150,50,.16) 0 1px, transparent 1px 9px);
+  }
+
+  /* one tile pulled to brand red — the "in progress" tile */
+  .ct.mark {
+    background: var(--red);
+    display: grid;
+    place-items: center;
+  }
+  .ct.mark span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-align: center;
+    line-height: 1.5;
+    padding: 6px;
+  }
+
+  /* HVAC supply diffuser */
+  .ct.vent {
+    background: var(--tile-alt);
+    display: grid;
+    place-items: center;
+  }
+  .ct.vent i {
+    width: 54%;
+    aspect-ratio: 1;
+    border: 1.5px solid var(--metal);
+    background: repeating-linear-gradient(45deg, var(--metal-hi) 0 2px, transparent 2px 7px);
+    border-radius: 2px;
+  }
+
+  @keyframes set-tile {
+    from { opacity: 0; transform: translateY(-9px) scale(.965); }
+    to   { opacity: 1; transform: none; }
+  }
+  .ct:nth-child(1){animation-delay:.05s} .ct:nth-child(2){animation-delay:.11s}
+  .ct:nth-child(3){animation-delay:.17s} .ct:nth-child(4){animation-delay:.23s}
+  .ct:nth-child(5){animation-delay:.29s} .ct:nth-child(6){animation-delay:.35s}
+  .ct:nth-child(7){animation-delay:.41s} .ct:nth-child(8){animation-delay:.47s}
+  .ct:nth-child(9){animation-delay:.53s} .ct:nth-child(10){animation-delay:.59s}
+  .ct:nth-child(11){animation-delay:.65s} .ct:nth-child(12){animation-delay:.71s}
+  .ct:nth-child(13){animation-delay:.77s} .ct:nth-child(14){animation-delay:.83s}
+  .ct:nth-child(15){animation-delay:.89s}
+
+  .ceiling-cap {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     SPEC TICKER
+     ============================================================ */
+  .specbar {
+    background: var(--navy-900);
+    border-block: 1px solid var(--line);
+  }
+  :root:not([data-theme="light"]) .specbar { background: var(--surface); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .specbar { background: #0F1C42; } }
+  :root[data-theme="light"] .specbar { background: #0F1C42; }
+  :root[data-theme="dark"] .specbar { background: var(--surface); }
+
+  .specbar-in {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 38px;
+    padding: 20px 24px;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.62);
+  }
+  :root[data-theme="dark"] .specbar-in { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .specbar-in { color: var(--muted); } }
+  .specbar-in span { color: #fff; }
+  :root[data-theme="dark"] .specbar-in span { color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .specbar-in span { color: var(--ink); } }
+  .specbar-in i {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--red);
+    transform: rotate(45deg);
+    margin-right: 10px;
+    vertical-align: 1px;
+  }
+
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  .sec { padding: 92px 0; }
+  .sec-alt { background: var(--surface); }
+
+  .sec-head { max-width: 62ch; margin-bottom: 44px; }
+  .sec-head h2 {
+    font-size: clamp(30px, 3.7vw, 44px);
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+  .sec-head p { color: var(--muted); margin-top: 16px; font-size: 18px; }
+
+  /* --- services laid out as a real ceiling grid --- */
+  .grid-ceiling {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--tee);
+    background: var(--metal);
+    padding: var(--tee);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+  }
+  .svc {
+    background: var(--tile);
+    padding: 34px 30px 32px;
+    position: relative;
+    min-height: 258px;
+    display: flex;
+    flex-direction: column;
+    transition: background .2s;
+  }
+  .svc:hover { background: var(--surface); }
+  .svc::after {
+    content: "";
+    position: absolute;
+    right: 0; bottom: 0;
+    width: 84px; height: 84px;
+    background-image: radial-gradient(circle, var(--perf) 0.85px, transparent 1.1px);
+    background-size: 8px 8px;
+    opacity: .85;
+    pointer-events: none;
+  }
+  .svc-ico {
+    width: 34px; height: 34px;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+  .svc h3 {
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .svc p {
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.62;
+    margin-top: 12px;
+  }
+  .svc-tag {
+    margin-top: auto;
+    padding-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+
+  /* --- process: a genuine sequence, so numbering is earned --- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .step {
+    padding: 28px 26px 30px 0;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .step:last-child { border-right: 0; }
+  .step:not(:first-child) { padding-left: 26px; }
+  .step::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: 0;
+    width: 46px; height: 2px;
+    background: var(--red);
+  }
+  .step:not(:first-child)::before { left: 0; }
+  .step-n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--red);
+  }
+  .step h3 { font-size: 19px; margin-top: 14px; text-transform: uppercase; }
+  .step p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.6; }
+
+  /* --- service area --- */
+  .area-grid {
+    display: grid;
+    grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
+    gap: 56px;
+    align-items: center;
+  }
+  .towns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--tee);
+    background: var(--metal);
+    padding: var(--tee);
+    border-radius: 4px;
+  }
+  .town {
+    background: var(--tile);
+    padding: 13px 17px;
+    font-size: 14.5px;
+    font-weight: 550;
+    flex: 1 1 auto;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .town.home {
+    background: var(--red);
+    color: #fff;
+    font-weight: 700;
+  }
+  .town.more {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* --- owner note --- */
+  .owner {
+    display: grid;
+    grid-template-columns: auto minmax(0,1fr);
+    gap: 26px;
+    align-items: start;
+    background: var(--tile);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--red);
+    padding: 34px 34px 32px;
+    border-radius: 3px;
+  }
+  .owner-mark {
+    width: 56px; height: 56px;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    border-radius: 3px;
+  }
+  :root[data-theme="dark"] .owner-mark { color: var(--ground); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .owner-mark { color: var(--ground); } }
+  .owner blockquote {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+  }
+  .owner cite {
+    display: block;
+    margin-top: 16px;
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact { background: var(--navy-900); color: #fff; }
+  :root[data-theme="light"] .contact, .contact { background: #0F1C42; color: #fff; }
+  :root[data-theme="dark"] .contact { background: var(--surface); color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact { background: var(--surface); color: var(--ink); } }
+
+  .contact .sec-head h2, .contact h3 { color: inherit; }
+  .contact .sec-head p { color: rgba(255,255,255,.66); }
+  :root[data-theme="dark"] .contact .sec-head p { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact .sec-head p { color: var(--muted); } }
+  .contact .label { color: rgba(255,255,255,.5); }
+  :root[data-theme="dark"] .contact .label { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact .label { color: var(--muted); } }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--tee);
+    background: rgba(255,255,255,.14);
+    padding: var(--tee);
+    border-radius: 4px;
+  }
+  :root[data-theme="dark"] .contact-grid { background: var(--metal); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact-grid { background: var(--metal); } }
+
+  .cc {
+    background: rgba(255,255,255,.045);
+    padding: 30px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  :root[data-theme="dark"] .cc { background: var(--tile); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cc { background: var(--tile); } }
+  a.cc:hover { background: rgba(255,255,255,.1); }
+  :root[data-theme="dark"] a.cc:hover { background: var(--tile-alt); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) a.cc:hover { background: var(--tile-alt); } }
+
+  .cc-ico { width: 22px; height: 22px; color: var(--red); margin-bottom: 6px; }
+  .cc-k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.52);
+  }
+  :root[data-theme="dark"] .cc-k { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cc-k { color: var(--muted); } }
+  .cc-v { font-size: 18px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.35; }
+  .cc-note { font-size: 14px; color: rgba(255,255,255,.6); }
+  :root[data-theme="dark"] .cc-note { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cc-note { color: var(--muted); } }
+
+  .hours { display: grid; grid-template-columns: auto auto; gap: 4px 20px; font-size: 15px; margin-top: 2px; }
+  .hours dt { color: rgba(255,255,255,.6); }
+  .hours dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 600; }
+  :root[data-theme="dark"] .hours dt { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hours dt { color: var(--muted); } }
+  .closed { color: rgba(255,255,255,.45); font-weight: 400 !important; }
+  :root[data-theme="dark"] .closed { color: var(--muted); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .closed { color: var(--muted); } }
+
+  .contact-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-top: 34px;
+  }
+  .contact-cta .btn-ghost {
+    background: transparent;
+    border-color: rgba(255,255,255,.28);
+    color: #fff;
+  }
+  .contact-cta .btn-ghost:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.07); }
+  :root[data-theme="dark"] .contact-cta .btn-ghost { background: var(--tile); border-color: var(--line); color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact-cta .btn-ghost { background: var(--tile); border-color: var(--line); color: var(--ink); } }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .foot {
+    background: var(--ground);
+    border-top: 1px solid var(--line);
+    padding: 34px 0;
+  }
+  .foot-in {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 30px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--red); }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 980px) {
+    .hero-in { grid-template-columns: 1fr; gap: 48px; }
+    .ceiling { max-width: 520px; }
+    .grid-ceiling { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .step:nth-child(2) { border-right: 0; }
+    .area-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav { display: none; }
+  }
+  @media (max-width: 620px) {
+    body { font-size: 16px; }
+    .sec { padding: 66px 0; }
+    .hero { padding: 52px 0 64px; }
+    .grid-ceiling { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .step { border-right: 0; padding-left: 0 !important; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; }
+    .owner { grid-template-columns: 1fr; gap: 20px; padding: 26px; }
+    .head-in { height: 60px; gap: 12px; }
+    .brand-sub { display: none; }
+    .cta .btn { flex: 1 1 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+</style>
+
+
+<!-- ================= HEADER ================= -->
+<header class="head">
+  <div class="wrap head-in">
+    <a class="brand" href="#top" aria-label="ACT Contractors home">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <clipPath id="dia">
+            <rect x="18" y="18" width="64" height="64" rx="9" transform="rotate(45 50 50)"/>
+          </clipPath>
+        </defs>
+        <rect x="18" y="18" width="64" height="64" rx="9" transform="rotate(45 50 50)" fill="#1E3080"/>
+        <g clip-path="url(#dia)" fill="none" stroke-linecap="round">
+          <path d="M-6 62 C 22 34, 48 34, 106 14" stroke="#fff" stroke-width="5"/>
+          <path d="M-6 72 C 22 44, 48 44, 106 24" stroke="#C4202E" stroke-width="7"/>
+          <path d="M-6 82 C 22 54, 48 54, 106 34" stroke="#fff" stroke-width="5"/>
+          <path d="M-6 92 C 22 64, 48 64, 106 44" stroke="#C4202E" stroke-width="7"/>
+          <path d="M-6 102 C 22 74, 48 74, 106 54" stroke="#fff" stroke-width="5"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand-name">ACT Contractors</span>
+        <span class="brand-sub">Acoustical Ceilings</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#work">What We Do</a>
+      <a href="#area">Service Area</a>
+      <a href="#process">How It Goes</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-red btn-sm" href="tel:+17742276788">774-227-6788</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-in">
+
+      <div>
+        <p class="eyebrow">
+          <svg class="pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+          Taunton, Massachusetts
+        </p>
+
+        <h1>
+          Ceilings<br>
+          <span class="thin"><span class="rule"></span>done right,</span>
+          <span class="thin">the first time</span>
+        </h1>
+
+        <p class="lede">
+          Acoustical ceiling installation, repair and specialty systems for commercial
+          and institutional buildings across southeastern Massachusetts.
+          <strong>Owner-run out of Taunton</strong> — the person who quotes your job is the
+          person who stands behind it.
+        </p>
+
+        <div class="cta">
+          <a class="btn btn-red" href="#contact">
+            Request an estimate
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="tel:+17742276788">Call 774-227-6788</a>
+        </div>
+
+        <div class="hero-facts">
+          <div class="fact"><span class="fact-k">Based</span><span class="fact-v">Taunton, MA</span></div>
+          <div class="fact"><span class="fact-k">Sectors</span><span class="fact-v">Commercial &amp; institutional</span></div>
+          <div class="fact"><span class="fact-k">Office</span><span class="fact-v">Mon–Fri, 7–5</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ceiling" role="img" aria-label="Plan view of a finished suspended acoustical ceiling with lay-in tile, a recessed light fixture and an air diffuser.">
+          <div class="ct perf"></div>
+          <div class="ct alt perf"></div>
+          <div class="ct light"></div>
+          <div class="ct perf"></div>
+
+          <div class="ct alt perf"></div>
+          <div class="ct wide perf"></div>
+          <div class="ct vent"><i></i></div>
+
+          <div class="ct perf"></div>
+          <div class="ct mark"><span>2×2<br>Lay-in</span></div>
+          <div class="ct alt perf"></div>
+          <div class="ct perf"></div>
+
+          <div class="ct light"></div>
+          <div class="ct perf"></div>
+          <div class="ct alt perf"></div>
+          <div class="ct perf"></div>
+        </div>
+        <div class="ceiling-cap">
+          <span>15/16" Exposed Tee Grid</span>
+          <span>2×2 &amp; 2×4 Lay-in</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SPEC BAR ================= -->
+  <div class="specbar">
+    <div class="wrap specbar-in">
+      <p><i></i>Grid <span>15/16" &amp; 9/16"</span></p>
+      <p><i></i>Tile <span>Square &amp; tegular edge</span></p>
+      <p><i></i>Acoustics <span>NRC + CAC rated</span></p>
+      <p><i></i>Seismic <span>Braced assemblies</span></p>
+      <p><i></i>Specialty <span>Clouds, baffles, metal, wood</span></p>
+    </div>
+  </div>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label"><b>◆</b> &nbsp;What We Do</p>
+        <h2>Everything above your head</h2>
+        <p>
+          Suspended ceilings are all we do, which means we know exactly how they go
+          wrong — and how to hang them so they don't.
+        </p>
+      </div>
+
+      <div class="grid-ceiling">
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="1"/><path d="M12 4.5v15M2.5 12h19"/>
+          </svg>
+          <h3>New Ceiling Systems</h3>
+          <p>Full suspended grid and lay-in tile for new construction and gut renovations — laid out, hung, leveled and tiled to spec.</p>
+          <p class="svc-tag">Grid + Tile</p>
+        </article>
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="1"/><path d="M2.5 12h19M12 4.5v7.5"/><path d="M13 13.5l7.5 7.5" stroke-linecap="round"/><path d="M12.5 13l1.8-.4-.4 1.8z" fill="currentColor" stroke="none"/>
+          </svg>
+          <h3>Tile Replacement</h3>
+          <p>Water-stained, sagging or discontinued tile swapped out — matched to your existing grid and texture so the repair disappears.</p>
+          <p class="svc-tag">Match &amp; Repair</p>
+        </article>
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 7h18M3 12h18M3 17h18"/><circle cx="7.5" cy="7" r="1.6" fill="currentColor" stroke="none"/><circle cx="16" cy="17" r="1.6" fill="currentColor" stroke="none"/>
+          </svg>
+          <h3>Acoustic Treatment</h3>
+          <p>Rooms that echo, carry sound between offices, or fail a sound test. We spec tile by NRC and CAC to fix the actual problem.</p>
+          <p class="svc-tag">NRC / CAC</p>
+        </article>
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="8" height="6" rx="1"/><rect x="13" y="9" width="8" height="6" rx="1"/><path d="M7 11v3M17 15v3" stroke-linecap="round"/>
+          </svg>
+          <h3>Clouds &amp; Baffles</h3>
+          <p>Floating clouds, canopies, baffles and open-cell systems for lobbies, restaurants and exposed-structure fit-outs.</p>
+          <p class="svc-tag">Architectural</p>
+        </article>
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+          </svg>
+          <h3>Specialty Ceilings</h3>
+          <p>Linear metal, wood veneer, torsion-spring and tight-tolerance concealed grid where the ceiling is part of the design.</p>
+          <p class="svc-tag">Metal &amp; Wood</p>
+        </article>
+
+        <article class="svc">
+          <svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.5l8.5 4v5.5c0 4.7-3.4 8.4-8.5 9.5-5.1-1.1-8.5-4.8-8.5-9.5V6.5z"/><path d="M9 12l2.2 2.2L15.5 10"/>
+          </svg>
+          <h3>Demo &amp; Fire-Rated Work</h3>
+          <p>Tear-out and disposal, plus rated assemblies and seismic bracing built to pass inspection the first time through.</p>
+          <p class="svc-tag">Code Compliant</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section class="sec sec-alt" id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label"><b>◆</b> &nbsp;How It Goes</p>
+        <h2>Four steps, no surprises</h2>
+        <p>Every job runs the same way, whether it's twelve tiles or twelve thousand square feet.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <p class="step-n">STEP 01</p>
+          <h3>Walkthrough</h3>
+          <p>We come out, get up on a ladder and look at what's actually there — grid condition, tile size, what's above it.</p>
+        </div>
+        <div class="step">
+          <p class="step-n">STEP 02</p>
+          <h3>Takeoff &amp; Quote</h3>
+          <p>A written number with the material spec named on it. No allowances that balloon later.</p>
+        </div>
+        <div class="step">
+          <p class="step-n">STEP 03</p>
+          <h3>Schedule</h3>
+          <p>Nights, weekends or phased by floor if you can't shut the space down. We work around your building.</p>
+        </div>
+        <div class="step">
+          <p class="step-n">STEP 04</p>
+          <h3>Install &amp; Punch</h3>
+          <p>Clean install, dust controlled, debris hauled out. We walk it with you before we call it done.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICE AREA ================= -->
+  <section class="sec" id="area">
+    <div class="wrap area-grid">
+      <div>
+        <p class="label"><b>◆</b> &nbsp;Service Area</p>
+        <h2 style="font-size:clamp(30px,3.7vw,44px);text-transform:uppercase;margin-top:14px;">We're down the road, not out of state</h2>
+        <p style="color:var(--muted);margin-top:16px;">
+          Our shop is on Robert W. Boyden Road in Taunton. Most of our work is inside an
+          hour of that door — which is why a punch-list item gets handled the same week,
+          not the next quarter.
+        </p>
+        <div class="owner" style="margin-top:32px;">
+          <div class="owner-mark">JH</div>
+          <div>
+            <blockquote>"You call the number on this page, you get me. That's the whole idea."</blockquote>
+            <cite>Jeff Hebert — Owner / President</cite>
+          </div>
+        </div>
+      </div>
+
+      <div class="towns">
+        <span class="town home">Taunton</span>
+        <span class="town">Raynham</span>
+        <span class="town">Bridgewater</span>
+        <span class="town">Brockton</span>
+        <span class="town">Norton</span>
+        <span class="town">Mansfield</span>
+        <span class="town">Attleboro</span>
+        <span class="town">Easton</span>
+        <span class="town">Middleboro</span>
+        <span class="town">Fall River</span>
+        <span class="town">New Bedford</span>
+        <span class="town">Plymouth</span>
+        <span class="town">Foxborough</span>
+        <span class="town">Quincy</span>
+        <span class="town">Boston</span>
+        <span class="town">Providence, RI</span>
+        <span class="town more">+ surrounding towns</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="sec contact" id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label"><b>◆</b> &nbsp;Contact</p>
+        <h2>Get a number on it</h2>
+        <p>Send over a plan set, a photo of a stained tile, or just tell us the square footage. We'll take it from there.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <a class="cc" href="tel:+17742276788">
+          <svg class="cc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>
+          </svg>
+          <p class="cc-k">Phone</p>
+          <p class="cc-v">774-227-6788</p>
+          <p class="cc-note">Jeff Hebert, Owner / President</p>
+        </a>
+
+        <a class="cc" href="mailto:jeff@actcontractors.net?subject=Estimate%20request%20%E2%80%94%20acoustical%20ceiling&amp;body=Project%20location%3A%0AApprox.%20square%20footage%3A%0ATile%20%26%20grid%20type%20(if%20known)%3A%0ATimeline%3A%0A%0ADetails%3A%0A">
+          <svg class="cc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2.5 6.5 9.5 7 9.5-7"/>
+          </svg>
+          <p class="cc-k">Email</p>
+          <p class="cc-v">jeff@actcontractors.net</p>
+          <p class="cc-note">Plans and photos welcome</p>
+        </a>
+
+        <a class="cc" href="https://maps.google.com/?q=30+Robert+W+Boyden+Road+Suite+B600+Taunton+MA+02780" target="_blank" rel="noopener noreferrer">
+          <svg class="cc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p class="cc-k">Shop</p>
+          <p class="cc-v">30 Robert W Boyden Rd<br>Suite B600</p>
+          <p class="cc-note">Taunton, MA 02780</p>
+        </a>
+
+        <div class="cc" style="grid-column: 1 / -1;">
+          <svg class="cc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/>
+          </svg>
+          <p class="cc-k">Office Hours</p>
+          <dl class="hours">
+            <dt>Monday – Friday</dt><dd>7:00 AM – 5:00 PM</dd>
+            <dt>Saturday – Sunday</dt><dd class="closed">Closed</dd>
+          </dl>
+        </div>
+
+      </div>
+
+      <div class="contact-cta">
+        <a class="btn btn-red" href="mailto:jeff@actcontractors.net?subject=Estimate%20request%20%E2%80%94%20acoustical%20ceiling">Email Jeff directly</a>
+        <a class="btn btn-ghost" href="tel:+17742276788">Or call the shop</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p>© 2026 ACT Contractors · Acoustical ceilings · Taunton, Massachusetts</p>
+    <div class="foot-links">
+      <a href="#work">What We Do</a>
+      <a href="#area">Service Area</a>
+      <a href="tel:+17742276788">774-227-6788</a>
+      <a href="mailto:jeff@actcontractors.net">Email</a>
+    </div>
+  </div>
+</footer>
